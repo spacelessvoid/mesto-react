@@ -7,10 +7,21 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(false);
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  }
 
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  }
+
+  const [selectedCard, setSelectedCard] = useState(false);
   function handleCardClick(card) {
     setSelectedCard(card);
   }
@@ -26,9 +37,9 @@ function App() {
     <div className="page">
       <Header />
       <Main
-        onEditAvatar={() => setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)}
-        onEditProfile={() => setIsEditProfilePopupOpen(!isEditProfilePopupOpen)}
-        onAddPlace={() => setIsAddPlacePopupOpen(!isAddPlacePopupOpen)}
+        onEditAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
         onCardClick={handleCardClick}
       />
       <Footer />

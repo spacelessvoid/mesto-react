@@ -24,7 +24,7 @@ export default function Main({
         setUserAvatar(userData.avatar);
         setUserName(userData.name);
         setUserDescription(userData.about);
-				
+
         setCards(cards);
       })
       .catch(err => {
