@@ -66,10 +66,7 @@ export default function Main({
         {cards.map(card => (
           <Card
             key={card._id}
-            id={card._id}
-            link={card.link}
-            name={card.name}
-            likes={card.likes.length}
+            card={card}
             onCardClick={onCardClick}
           />
         ))}

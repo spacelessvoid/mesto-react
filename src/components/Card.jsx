@@ -1,4 +1,4 @@
-export default function Card({ id, link, name, likes, onCardClick }) {
+export default function Card({ card: { id, link, name, likes }, onCardClick }) {
   function handleClick() {
     onCardClick({ link, name });
   }
@@ -23,7 +23,7 @@ export default function Card({ id, link, name, likes, onCardClick }) {
           type="button"
           aria-label="Сердечко"
         ></button>
-        <div className="card__like-count">{likes}</div>
+        <div className="card__like-count">{likes.length}</div>
       </div>
     </article>
   );

@@ -50,20 +50,18 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
-            className="popup__text-input popup__text-input_type_avatar"
-            type="url"
-            name="avatar"
-            id="avatar-input"
-            placeholder="Ссылка на новый аватар"
-            required
-          />
-          <span className="popup__input-error avatar-input-error"></span>
-          <button className="popup__button button" type="submit">
-            Сохранить
-          </button>
-        </>
+        <input
+          className="popup__text-input popup__text-input_type_avatar"
+          type="url"
+          name="avatar"
+          id="avatar-input"
+          placeholder="Ссылка на новый аватар"
+          required
+        />
+        <span className="popup__input-error avatar-input-error"></span>
+        <button className="popup__button button" type="submit">
+          Сохранить
+        </button>
       </PopupWithForm>
 
       <PopupWithForm
@@ -72,33 +70,31 @@ function App() {
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
-            className="popup__text-input popup__text-input_type_name"
-            type="text"
-            name="name"
-            id="name-input"
-            placeholder="Введите имя"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span className="popup__input-error name-input-error"></span>
-          <input
-            className="popup__text-input popup__text-input_type_job"
-            type="text"
-            name="about"
-            id="job-input"
-            placeholder="Введите профессию"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span className="popup__input-error job-input-error"></span>
-          <button className="popup__button button" type="submit">
-            Сохранить
-          </button>
-        </>
+        <input
+          className="popup__text-input popup__text-input_type_name"
+          type="text"
+          name="name"
+          id="name-input"
+          placeholder="Введите имя"
+          minLength="2"
+          maxLength="40"
+          required
+        />
+        <span className="popup__input-error name-input-error"></span>
+        <input
+          className="popup__text-input popup__text-input_type_job"
+          type="text"
+          name="about"
+          id="job-input"
+          placeholder="Введите профессию"
+          minLength="2"
+          maxLength="200"
+          required
+        />
+        <span className="popup__input-error job-input-error"></span>
+        <button className="popup__button button" type="submit">
+          Сохранить
+        </button>
       </PopupWithForm>
 
       <PopupWithForm
@@ -107,39 +103,35 @@ function App() {
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
-            className="popup__text-input popup__text-input_type_title"
-            type="text"
-            name="name"
-            id="title-input"
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="popup__input-error title-input-error"></span>
-          <input
-            className="popup__text-input popup__text-input_type_link"
-            type="url"
-            name="link"
-            id="link-input"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="popup__input-error link-input-error"></span>
-          <button className="popup__button button" type="submit">
-            Создать
-          </button>
-        </>
+        <input
+          className="popup__text-input popup__text-input_type_title"
+          type="text"
+          name="name"
+          id="title-input"
+          placeholder="Название"
+          minLength="2"
+          maxLength="30"
+          required
+        />
+        <span className="popup__input-error title-input-error"></span>
+        <input
+          className="popup__text-input popup__text-input_type_link"
+          type="url"
+          name="link"
+          id="link-input"
+          placeholder="Ссылка на картинку"
+          required
+        />
+        <span className="popup__input-error link-input-error"></span>
+        <button className="popup__button button" type="submit">
+          Создать
+        </button>
       </PopupWithForm>
 
       <PopupWithForm title={"Вы уверены?"} name={"confirm-delete"}>
-        <>
-          <button className="popup__button button" type="submit">
-            Да, удалить карточку
-          </button>
-        </>
+        <button className="popup__button button" type="submit">
+          Да, удалить карточку
+        </button>
       </PopupWithForm>
 
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
