@@ -2,39 +2,34 @@ import { useEffect, useState } from "react";
 import { api } from "../utils/Api";
 import Card from "./Card";
 
-export default function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+export default function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+}) {
   const [userAvatar, setUserAvatar] = useState("");
   const [userName, setUserName] = useState("");
   const [userDescription, setUserDescription] = useState("");
+  const [cards, setCards] = useState([]);
 
-  // Fetching user profile data
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then(result => {
-        setUserAvatar(result.avatar);
-        setUserName(result.name);
-        setUserDescription(result.about);
+    Promise.all([
+      // Fetching user profile data
+      api.getUserInfo(),
+      // Fetching initial cards
+      api.getInitialCards(),
+    ])
+      .then(([userData, cards]) => {
+        setUserAvatar(userData.avatar);
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+				
+        setCards(cards);
       })
       .catch(err => {
         console.log(err);
       });
-  }, [userAvatar, userName, userDescription]);
-
-  const [cards, setCards] = useState([]);
-
-  // Fetching cards data
-  useEffect(() => {
-    if (cards) {
-      api
-        .getInitialCards()
-        .then(result => {
-          setCards(result);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
   }, []);
 
   return (
@@ -75,7 +70,7 @@ export default function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardCl
             link={card.link}
             name={card.name}
             likes={card.likes.length}
-						onCardClick={onCardClick}
+            onCardClick={onCardClick}
           />
         ))}
       </section>
