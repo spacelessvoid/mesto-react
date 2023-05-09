@@ -3,16 +3,23 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(false);
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+  // TODO: fix image popup closing glitch
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
+    setSelectedCard(false);
   }
 
   return (
@@ -22,6 +29,7 @@ function App() {
         onEditAvatar={() => setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen)}
         onEditProfile={() => setIsEditProfilePopupOpen(!isEditProfilePopupOpen)}
         onAddPlace={() => setIsAddPlacePopupOpen(!isAddPlacePopupOpen)}
+        onCardClick={handleCardClick}
       />
       <Footer />
 
@@ -60,8 +68,8 @@ function App() {
             name="name"
             id="name-input"
             placeholder="Введите имя"
-            minlength="2"
-            maxlength="40"
+            minLength="2"
+            maxLength="40"
             required
           />
           <span className="popup__input-error name-input-error"></span>
@@ -71,8 +79,8 @@ function App() {
             name="about"
             id="job-input"
             placeholder="Введите профессию"
-            minlength="2"
-            maxlength="200"
+            minLength="2"
+            maxLength="200"
             required
           />
           <span className="popup__input-error job-input-error"></span>
@@ -95,8 +103,8 @@ function App() {
             name="name"
             id="title-input"
             placeholder="Название"
-            minlength="2"
-            maxlength="30"
+            minLength="2"
+            maxLength="30"
             required
           />
           <span className="popup__input-error title-input-error"></span>
@@ -122,6 +130,8 @@ function App() {
           </button>
         </>
       </PopupWithForm>
+
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </div>
   );
 }

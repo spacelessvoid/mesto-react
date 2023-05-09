@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { api } from "../utils/Api";
+import Card from "./Card";
 
-export default function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+export default function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [userAvatar, setUserAvatar] = useState("");
   const [userName, setUserName] = useState("");
   const [userDescription, setUserDescription] = useState("");
@@ -19,6 +20,22 @@ export default function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
         console.log(err);
       });
   }, [userAvatar, userName, userDescription]);
+
+  const [cards, setCards] = useState([]);
+
+  // Fetching cards data
+  useEffect(() => {
+    if (cards) {
+      api
+        .getInitialCards()
+        .then(result => {
+          setCards(result);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, []);
 
   return (
     <main className="content">
@@ -50,7 +67,18 @@ export default function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
         ></button>
       </section>
 
-      <section className="gallery" aria-label="Галерея изображений"></section>
+      <section className="gallery" aria-label="Галерея изображений">
+        {cards.map(card => (
+          <Card
+            key={card._id}
+            id={card._id}
+            link={card.link}
+            name={card.name}
+            likes={card.likes.length}
+						onCardClick={onCardClick}
+          />
+        ))}
+      </section>
     </main>
   );
 }
