@@ -5,17 +5,26 @@ export default function PopupWithForm({
   isOpen,
   onClose,
 }) {
+  function handleClick(evt) {
+    if (
+      evt.target.classList.contains("popup") ||
+      evt.target.classList.contains("popup__close")
+    ) {
+      onClose();
+    }
+  }
+
   return (
     <div
       className={"popup" + (isOpen ? " popup_opened" : "")}
       id={`popup-${name}`}
+      onClick={handleClick}
     >
       <div className="popup__container">
         <button
           className="popup__close button"
           type="button"
           aria-label="Закрыть всплывающее окно"
-          onClick={onClose}
         ></button>
 
         <h2 className="popup__title">{title}</h2>
