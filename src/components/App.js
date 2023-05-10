@@ -7,24 +7,29 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
 
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
 
   const [selectedCard, setSelectedCard] = useState(false);
+
   function handleCardClick(card) {
     setSelectedCard(card);
   }
+
   // TODO: fix image popup closing glitch
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);

@@ -13,6 +13,10 @@ export default function Main({
   const [userDescription, setUserDescription] = useState("");
   const [cards, setCards] = useState([]);
 
+  const cardsList = cards.map(card => (
+    <Card key={card._id} card={card} onCardClick={onCardClick} />
+  ));
+
   useEffect(() => {
     Promise.all([
       // Fetching user profile data
@@ -63,13 +67,7 @@ export default function Main({
       </section>
 
       <section className="gallery" aria-label="Галерея изображений">
-        {cards.map(card => (
-          <Card
-            key={card._id}
-            card={card}
-            onCardClick={onCardClick}
-          />
-        ))}
+        {cardsList}
       </section>
     </main>
   );
