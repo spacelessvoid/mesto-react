@@ -24,7 +24,7 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -35,7 +35,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard(null);
   }
 
   return (

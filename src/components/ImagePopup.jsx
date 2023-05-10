@@ -10,9 +10,7 @@ export default function ImagePopup({ card, onClose }) {
 
   return (
     <div
-      className={
-        "popup popup_bg-opacity_darker" + (card ? " popup_opened" : "")
-      }
+      className={`popup popup_bg-opacity_darker ${card && "popup_opened"}`}
       id="popup-zoom-image"
       onClick={handleClick}
     >
@@ -24,11 +22,13 @@ export default function ImagePopup({ card, onClose }) {
         ></button>
         <figure className="popup__figure">
           <img
-            src={card.link}
-            alt={card.name}
+            src={card ? card.link : ""}
+            alt={card ? card.name : ""}
             className="popup__image-zoomed"
           />
-          <figcaption className="popup__caption">{card.name}</figcaption>
+          <figcaption className="popup__caption">
+            {card ? card.name : ""}
+          </figcaption>
         </figure>
       </div>
     </div>
