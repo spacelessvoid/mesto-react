@@ -1,3 +1,9 @@
+// TODO Refactor
+/*
+_request(url, options) {
+return fetch(url, options).then(this._checkStatus)
+*/
+
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
