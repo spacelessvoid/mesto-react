@@ -2,14 +2,15 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Card({
-  card: { id, link, name, likes, owner },
+  card: { _id, link, name, likes, owner },
   onCardClick,
+  onCardLike,
 }) {
-  const user = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
-  const isOwn = owner._id === user._id;
+  const isOwn = owner._id === currentUser._id;
 
-  const isLiked = likes.some(i => i._id === user._id);
+  const isLiked = likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = `button card__like-btn ${
     isLiked && "card__like-btn_active"
   }`;
@@ -18,10 +19,14 @@ export default function Card({
     onCardClick({ link, name });
   }
 
+  function handleLikeClick() {
+    onCardLike({ _id, likes });
+  }
+
   function handleDeleteClick() {}
 
   return (
-    <article className="gallery__card card" id={id}>
+    <article className="gallery__card card" id={_id}>
       <img
         src={link}
         alt={name}
@@ -42,6 +47,7 @@ export default function Card({
           className={cardLikeButtonClassName}
           type="button"
           aria-label="Сердечко"
+          onClick={handleLikeClick}
         ></button>
         <div className="card__like-count">{likes.length}</div>
       </div>

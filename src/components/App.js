@@ -9,18 +9,19 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     Promise.all([
       // Fetching user profile data
       api.getUserInfo(),
       // Fetching initial cards
-      // api.getInitialCards(),
+      api.getInitialCards(),
     ])
-      .then(([userData]) => {
+      .then(([userData, cards]) => {
         setCurrentUser(userData);
 
-        // setCards(cards);
+        setCards(cards);
       })
       .catch(err => {
         console.log(err);
@@ -55,6 +56,14 @@ function App() {
     setSelectedCard(null);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, isLiked).then(newCard => {
+      setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
+    });
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -64,6 +73,8 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          cards={cards}
         />
         <Footer />
 
