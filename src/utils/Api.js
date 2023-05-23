@@ -58,18 +58,32 @@ class Api {
     }).then(res => this._checkStatus(res));
   }
 
-  addLike(cardID) {
-    return fetch(this._baseUrl + `/cards/likes/${cardID}`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(res => this._checkStatus(res));
-  }
+  // addLike(cardID) {
+  //   return fetch(this._baseUrl + `/cards/likes/${cardID}`, {
+  //     method: "PUT",
+  //     headers: this._headers,
+  //   }).then(res => this._checkStatus(res));
+  // }
 
-  removeLike(cardID) {
-    return fetch(this._baseUrl + `/cards/likes/${cardID}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(res => this._checkStatus(res));
+  // removeLike(cardID) {
+  //   return fetch(this._baseUrl + `/cards/likes/${cardID}`, {
+  //     method: "DELETE",
+  //     headers: this._headers,
+  //   }).then(res => this._checkStatus(res));
+  // }
+
+  changeLikeCardStatus(cardID, isLiked) {
+    if (isLiked === true) { // remove like
+      return fetch(this._baseUrl + `/cards/likes/${cardID}`, {
+        method: "DELETE",
+        headers: this._headers,
+      }).then(res => this._checkStatus(res));
+    } else { // add like
+      return fetch(this._baseUrl + `/cards/likes/${cardID}`, {
+        method: "PUT",
+        headers: this._headers,
+      }).then(res => this._checkStatus(res));
+    }
   }
 }
 
