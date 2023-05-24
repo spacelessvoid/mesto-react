@@ -8,6 +8,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -73,17 +74,24 @@ function App() {
   }
 
   function handleUpdateUser(info) {
-    api.updateUserInfo(info).then(newInfo => {
-      setCurrentUser(newInfo);
-      closeAllPopups();
-    });
+    api
+      .updateUserInfo(info)
+      .then(newInfo => setCurrentUser(newInfo))
+      .finally(() => closeAllPopups());
   }
 
   function handleUpdateAvatar(avatar) {
-    api.updateUserAvatar(avatar).then(newAvatar => {
-      setCurrentUser(newAvatar);
-      closeAllPopups();
-    });
+    api
+      .updateUserAvatar(avatar)
+      .then(newAvatar => setCurrentUser(newAvatar))
+      .finally(() => closeAllPopups());
+  }
+
+  function handleAddPlaceSubmit(card) {
+    api
+      .addNewCard(card)
+      .then(newCard => setCards([newCard, ...cards]))
+      .finally(() => closeAllPopups());
   }
 
   return (
@@ -114,36 +122,11 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
 
-        <PopupWithForm
-          title={"Новое место"}
-          name={"add-image"}
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            className="popup__text-input popup__text-input_type_title"
-            type="text"
-            name="name"
-            id="title-input"
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="popup__input-error title-input-error"></span>
-          <input
-            className="popup__text-input popup__text-input_type_link"
-            type="url"
-            name="link"
-            id="link-input"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="popup__input-error link-input-error"></span>
-          <button className="popup__button button" type="submit">
-            Создать
-          </button>
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <PopupWithForm title={"Вы уверены?"} name={"confirm-delete"}>
           <button className="popup__button button" type="submit">
