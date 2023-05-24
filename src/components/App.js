@@ -6,6 +6,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -63,10 +64,17 @@ function App() {
       setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
     });
   }
-  
+
   function handleCardDelete(card) {
     api.deleteCard(card._id).then(() => {
-      setCards(state => state.filter(c => (c._id !== card._id)));
+      setCards(state => state.filter(c => c._id !== card._id));
+    });
+  }
+
+  function handleUpdateUser(info) {
+    api.updateUserInfo(info).then(newInfo => {
+      setCurrentUser(newInfo);
+      closeAllPopups();
     });
   }
 
@@ -81,9 +89,16 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
+          onUpdateUser={handleUpdateUser}
           cards={cards}
         />
         <Footer />
+
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           title={"Обновить аватар"}
@@ -100,39 +115,6 @@ function App() {
             required
           />
           <span className="popup__input-error avatar-input-error"></span>
-          <button className="popup__button button" type="submit">
-            Сохранить
-          </button>
-        </PopupWithForm>
-
-        <PopupWithForm
-          title={"Редактировать профиль"}
-          name={"edit-profile"}
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            className="popup__text-input popup__text-input_type_name"
-            type="text"
-            name="name"
-            id="name-input"
-            placeholder="Введите имя"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span className="popup__input-error name-input-error"></span>
-          <input
-            className="popup__text-input popup__text-input_type_job"
-            type="text"
-            name="about"
-            id="job-input"
-            placeholder="Введите профессию"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span className="popup__input-error job-input-error"></span>
           <button className="popup__button button" type="submit">
             Сохранить
           </button>

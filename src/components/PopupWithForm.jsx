@@ -4,6 +4,7 @@ export default function PopupWithForm({
   children,
   isOpen,
   onClose,
+  onSubmit,
 }) {
   function handleClick(evt) {
     if (
@@ -33,6 +34,8 @@ export default function PopupWithForm({
           id={`${name}`}
           name={`${name}`}
           noValidate
+
+          onSubmit={onSubmit}
         >
           {children}
         </form>
