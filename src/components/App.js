@@ -63,6 +63,12 @@ function App() {
       setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
     });
   }
+  
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(() => {
+      setCards(state => state.filter(c => (c._id !== card._id)));
+    });
+  }
 
   return (
     <div className="page">
@@ -74,6 +80,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
           cards={cards}
         />
         <Footer />

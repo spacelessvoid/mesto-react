@@ -5,6 +5,7 @@ export default function Card({
   card: { _id, link, name, likes, owner },
   onCardClick,
   onCardLike,
+  onCardDelete,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -23,7 +24,9 @@ export default function Card({
     onCardLike({ _id, likes });
   }
 
-  function handleDeleteClick() {}
+  function handleDeleteClick() {
+    onCardDelete({ _id });
+  }
 
   return (
     <article className="gallery__card card" id={_id}>

@@ -8,12 +8,19 @@ export default function Main({
   onAddPlace,
   onCardClick,
   onCardLike,
-  cards
+  onCardDelete,
+  cards,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
   const cardsList = cards.map(card => (
-    <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} />
+    <Card
+      key={card._id}
+      card={card}
+      onCardClick={onCardClick}
+      onCardLike={onCardLike}
+      onCardDelete={onCardDelete}
+    />
   ));
 
   return (
