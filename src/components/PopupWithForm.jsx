@@ -34,7 +34,6 @@ export default function PopupWithForm({
           id={`${name}`}
           name={`${name}`}
           noValidate
-
           onSubmit={onSubmit}
         >
           {children}

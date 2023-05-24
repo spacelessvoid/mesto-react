@@ -5,12 +5,12 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const [name, setName] = useState("Имя");
+  const [name, setName] = useState("");
   function handleNameChange(e) {
     setName(e.target.value);
   }
 
-  const [description, setDescription] = useState("Описание");
+  const [description, setDescription] = useState("");
   function handleDescriptionChange(e) {
     setDescription(e.target.value);
   }
@@ -46,7 +46,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         minLength="2"
         maxLength="40"
         required
-        value={name}
+        value={name || ""}
         onChange={handleNameChange}
       />
       <span className="popup__input-error name-input-error"></span>
@@ -59,7 +59,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         minLength="2"
         maxLength="200"
         required
-        value={description}
+        value={description || ""}
         onChange={handleDescriptionChange}
       />
       <span className="popup__input-error job-input-error"></span>
