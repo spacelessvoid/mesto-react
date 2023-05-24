@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -78,6 +79,13 @@ function App() {
     });
   }
 
+  function handleUpdateAvatar(avatar) {
+    api.updateUserAvatar(avatar).then(newAvatar => {
+      setCurrentUser(newAvatar);
+      closeAllPopups();
+    });
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -100,25 +108,11 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
-        <PopupWithForm
-          title={"Обновить аватар"}
-          name={"change-avatar"}
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-        >
-          <input
-            className="popup__text-input popup__text-input_type_avatar"
-            type="url"
-            name="avatar"
-            id="avatar-input"
-            placeholder="Ссылка на новый аватар"
-            required
-          />
-          <span className="popup__input-error avatar-input-error"></span>
-          <button className="popup__button button" type="submit">
-            Сохранить
-          </button>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <PopupWithForm
           title={"Новое место"}
