@@ -13,6 +13,10 @@ import AddPlacePopup from "./AddPlacePopup";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -31,22 +35,18 @@ function App() {
       });
   }, []);
 
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
 
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
   }
 
-  const [selectedCard, setSelectedCard] = useState(null);
   function handleCardClick(card) {
     setSelectedCard(card);
   }
@@ -62,21 +62,28 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, isLiked).then(newCard => {
-      setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then(newCard => {
+        setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
+      })
+      .catch(err => console.log(err));
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards(state => state.filter(c => c._id !== card._id));
-    });
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards(state => state.filter(c => c._id !== card._id));
+      })
+      .catch(err => console.log(err));
   }
 
   function handleUpdateUser(info) {
     api
       .updateUserInfo(info)
       .then(newInfo => setCurrentUser(newInfo))
+      .catch(err => console.log(err))
       .finally(() => closeAllPopups());
   }
 
@@ -91,6 +98,7 @@ function App() {
     api
       .addNewCard(card)
       .then(newCard => setCards([newCard, ...cards]))
+      .catch(err => console.log(err))
       .finally(() => closeAllPopups());
   }
 

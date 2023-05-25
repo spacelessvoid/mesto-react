@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
@@ -13,6 +13,11 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       link: cardLinkRef.current.value,
     });
   }
+
+  useEffect(() => {
+    cardTitleRef.current.value = "";
+    cardLinkRef.current.value = "";
+  }, [isOpen]);
 
   return (
     <PopupWithForm

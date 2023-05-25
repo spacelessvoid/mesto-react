@@ -22,13 +22,11 @@ export default function ImagePopup({ card, onClose }) {
         ></button>
         <figure className="popup__figure">
           <img
-            src={card ? card.link : ""}
-            alt={card ? card.name : ""}
+            src={card?.link}
+            alt={card?.name}
             className="popup__image-zoomed"
           />
-          <figcaption className="popup__caption">
-            {card ? card.name : ""}
-          </figcaption>
+          <figcaption className="popup__caption">{card?.name}</figcaption>
         </figure>
       </div>
     </div>
