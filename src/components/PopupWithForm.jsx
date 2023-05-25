@@ -6,6 +6,7 @@ export default function PopupWithForm({
   onClose,
   onSubmit,
 }) {
+
   function handleClick(evt) {
     if (
       evt.target.classList.contains("popup") ||

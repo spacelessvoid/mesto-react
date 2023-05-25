@@ -59,6 +59,32 @@ function App() {
     setSelectedCard(null);
   }
 
+  useEffect(() => {
+    function handleUserEscKeyPress(evt) {
+      if (evt.key === "Escape") {
+        closeAllPopups();
+      }
+    }
+
+    if (
+      isEditAvatarPopupOpen ||
+      isEditProfilePopupOpen ||
+      isAddPlacePopupOpen ||
+      selectedCard
+    ) {
+      window.addEventListener("keydown", handleUserEscKeyPress);
+    } else {
+      return () => {
+        window.removeEventListener("keydown", handleUserEscKeyPress);
+      };
+    }
+  }, [
+    isEditAvatarPopupOpen,
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    selectedCard,
+  ]);
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
