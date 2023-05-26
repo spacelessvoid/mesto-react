@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+export default function AddPlacePopup({
+  isOpen,
+  onClose,
+  onAddPlace,
+  isLoading,
+}) {
   const cardTitleRef = useRef();
   const cardLinkRef = useRef();
 
@@ -50,7 +55,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       />
       <span className="popup__input-error link-input-error"></span>
       <button className="popup__button button" type="submit">
-        Создать
+        {isLoading ? "Сохранение..." : "Создать"}
       </button>
     </PopupWithForm>
   );

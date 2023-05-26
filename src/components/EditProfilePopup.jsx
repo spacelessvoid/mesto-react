@@ -2,7 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+export default function EditProfilePopup({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  isLoading,
+}) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState("");
@@ -64,7 +69,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       />
       <span className="popup__input-error job-input-error"></span>
       <button className="popup__button button" type="submit">
-        Сохранить
+        {isLoading ? "Сохранение..." : "Сохранить"}
       </button>
     </PopupWithForm>
   );

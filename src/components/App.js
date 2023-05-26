@@ -17,6 +17,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -106,27 +107,42 @@ function App() {
   }
 
   function handleUpdateUser(info) {
+    setIsLoading(true);
+
     api
       .updateUserInfo(info)
       .then(newInfo => setCurrentUser(newInfo))
       .catch(err => console.log(err))
-      .finally(() => closeAllPopups());
+      .finally(() => {
+        closeAllPopups();
+        setIsLoading(false);
+      });
   }
 
   function handleUpdateAvatar(avatar) {
+    setIsLoading(true);
+
     api
       .updateUserAvatar(avatar)
       .then(newAvatar => setCurrentUser(newAvatar))
       .catch(err => console.log(err))
-      .finally(() => closeAllPopups());
+      .finally(() => {
+        closeAllPopups();
+        setIsLoading(false);
+      });
   }
 
   function handleAddPlaceSubmit(card) {
+    setIsLoading(true);
+    
     api
       .addNewCard(card)
       .then(newCard => setCards([newCard, ...cards]))
       .catch(err => console.log(err))
-      .finally(() => closeAllPopups());
+      .finally(() => {
+        closeAllPopups();
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -149,18 +165,21 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          isLoading={isLoading}
         />
 
         <PopupWithForm title={"Вы уверены?"} name={"confirm-delete"}>
