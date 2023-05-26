@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function PopupWithForm({
   title,
   name,
@@ -6,7 +8,6 @@ export default function PopupWithForm({
   onClose,
   onSubmit,
 }) {
-
   function handleClick(evt) {
     if (
       evt.target.classList.contains("popup") ||
@@ -15,6 +16,19 @@ export default function PopupWithForm({
       onClose();
     }
   }
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handleUserEscKeyPress(evt) {
+      if (evt.key === "Escape") {
+        onClose();
+      }
+    }
+
+    document.addEventListener("keydown", handleUserEscKeyPress);
+    return () => document.removeEventListener("keydown", handleUserEscKeyPress);
+  }, [isOpen, onClose]);
 
   return (
     <div
