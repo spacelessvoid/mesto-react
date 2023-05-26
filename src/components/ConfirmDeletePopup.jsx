@@ -5,11 +5,12 @@ export default function ConfirmDeletePopup({
   onClose,
   onConfirmDelete,
   isLoading,
+  card
 }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onConfirmDelete();
+    onConfirmDelete(card);
   }
 
   return (

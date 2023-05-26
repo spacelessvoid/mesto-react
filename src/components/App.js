@@ -19,6 +19,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
     useState(false);
+  const [deletedCard, setDeletedCard] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -74,17 +75,24 @@ function App() {
       .catch(err => console.log(err));
   }
 
+  function handleConfirmDelete(card) {
+    setIsConfirmDeletePopupOpen(true);
+    setDeletedCard(card);
+  }
+
   function handleCardDelete(card) {
+    setIsLoading(true);
+
     api
       .deleteCard(card._id)
       .then(() => {
         setCards(state => state.filter(c => c._id !== card._id));
       })
-      .catch(err => console.log(err));
-  }
-
-  function handleConfirmDelete(card) {
-    setIsConfirmDeletePopupOpen(true);
+      .catch(err => console.log(err))
+      .finally(() => {
+        closeAllPopups();
+        setIsLoading(false);
+      });
   }
 
   function handleUpdateUser(info) {
@@ -136,7 +144,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleConfirmDelete}
           onUpdateUser={handleUpdateUser}
           cards={cards}
         />
@@ -166,8 +174,9 @@ function App() {
         <ConfirmDeletePopup
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
-          onConfirmDelete={handleConfirmDelete}
+          onConfirmDelete={handleCardDelete}
           isLoading={isLoading}
+          card={deletedCard}
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
