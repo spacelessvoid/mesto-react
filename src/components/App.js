@@ -4,11 +4,11 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import ConfirmDeletePopup from "./ConfirmDeletePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -17,6 +17,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -57,6 +59,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
+    setIsConfirmDeletePopupOpen(false);
     setSelectedCard(null);
   }
 
@@ -106,6 +109,10 @@ function App() {
       .catch(err => console.log(err));
   }
 
+  function handleConfirmDelete(card) {
+    setIsConfirmDeletePopupOpen(true);
+  }
+
   function handleUpdateUser(info) {
     setIsLoading(true);
 
@@ -134,7 +141,7 @@ function App() {
 
   function handleAddPlaceSubmit(card) {
     setIsLoading(true);
-    
+
     api
       .addNewCard(card)
       .then(newCard => setCards([newCard, ...cards]))
@@ -182,11 +189,12 @@ function App() {
           isLoading={isLoading}
         />
 
-        <PopupWithForm title={"Вы уверены?"} name={"confirm-delete"}>
-          <button className="popup__button button" type="submit">
-            Да, удалить карточку
-          </button>
-        </PopupWithForm>
+        <ConfirmDeletePopup
+          isOpen={isConfirmDeletePopupOpen}
+          onClose={closeAllPopups}
+          onConfirmDelete={handleConfirmDelete}
+          isLoading={isLoading}
+        />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </CurrentUserContext.Provider>
